@@ -1,214 +1,814 @@
-<!-- Trigger fresh deployment -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Research Project</title>
+  <title>CAPE — Beneath the Surface</title>
 
   <style>
-    * { box-sizing: border-box; }
+    :root {
+      color-scheme: dark;
+      --ink: #e4f5f5;
+      --mint: #7ef3cc;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
+      position: relative;
+      isolation: isolate;
       margin: 0;
-      color: #303030;
-      background: white;
-      font-family: Arial, sans-serif;
-      line-height: 1.7;
+      color: var(--ink);
+      font-family: system-ui, sans-serif;
+      background: linear-gradient(
+        #72c9d2 0px,
+        #28889e 390px,
+        #104b69 950px,
+        #082c49 1800px,
+        #041a30 2900px,
+        #020f20 100%
+      );
+      overflow-x: hidden;
     }
 
-    header, main, footer {
-      max-width: 1000px;
-      margin: auto;
-      padding: 30px 24px;
+    a {
+      color: inherit;
     }
 
-    header {
-      text-align: center;
-      padding-top: 65px;
-      padding-bottom: 50px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(32px, 6vw, 48px);
-      line-height: 1.2;
-    }
-
-    .subtitle {
-      margin: 16px auto;
-      max-width: 850px;
-      font-size: 25px;
-      line-height: 1.4;
-    }
-
-    .authors { color: #1673b8; }
-
-    .buttons {
+    nav {
+      position: absolute;
+      z-index: 4;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 25px 6%;
       display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 25px;
+      justify-content: space-between;
+      align-items: center;
+      color: #072d40;
     }
 
-    .button {
-      padding: 8px 22px;
-      border-radius: 24px;
-      background: #333;
-      color: white;
+    nav strong {
+      letter-spacing: 0.22em;
+    }
+
+    nav a {
+      margin-left: 20px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
       text-decoration: none;
     }
 
-    .button:hover { background: #1673b8; }
+    .hero,
+    .ocean,
+    .floor {
+      z-index: 1;
+    }
 
-    section { margin-bottom: 60px; }
+    .hero {
+      position: relative;
+      isolation: isolate;
+      min-height: 970px;
+      padding: 450px 24px 130px;
+      text-align: center;
+    }
+
+    .sky {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 260px;
+      background: #cce8e4;
+      z-index: -2;
+    }
+
+    .horizon {
+      position: absolute;
+      top: 232px;
+      left: 0;
+      width: 100%;
+      height: 65px;
+      background: repeating-radial-gradient(
+        ellipse at 50% 0,
+        transparent 0 28px,
+        #b9ecea55 30px 32px,
+        transparent 34px 60px
+      );
+      opacity: 0.8;
+    }
+
+    /* Stationary ship, aligned with the waterline. */
+    .ship {
+      position: absolute;
+      top: 124px;
+      left: 50%;
+      width: 300px;
+      height: auto;
+      transform: translateX(-50%);
+      animation: none;
+    }
+
+    /* This layer spans from the ship to the page bottom. */
+    .sonar {
+      position: absolute;
+      top: 246px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .sonar i {
+      position: absolute;
+      top: 0;
+      left: -20%;
+      width: 140%;
+      height: 180px;
+      border-bottom: 2px solid #9fffe660;
+      border-radius: 0 0 50% 50%;
+      animation: ping 20s linear infinite;
+      will-change: transform, opacity;
+    }
+
+    .sonar i:nth-child(2) {
+      animation-delay: -4s;
+    }
+
+    .sonar i:nth-child(3) {
+      animation-delay: -8s;
+    }
+
+    .sonar i:nth-child(4) {
+      animation-delay: -12s;
+    }
+
+    .sonar i:nth-child(5) {
+      animation-delay: -16s;
+    }
+
+    .eyebrow {
+      text-transform: uppercase;
+      font: 11px monospace;
+      letter-spacing: 0.25em;
+      color: var(--mint);
+    }
+
+    h1 {
+      margin: 25px 0;
+      font-size: clamp(80px, 15vw, 160px);
+      font-weight: 500;
+      letter-spacing: -0.07em;
+      line-height: 1;
+    }
 
     h2 {
+      margin: 18px 0 25px;
+      font-family: Georgia, serif;
+      font-size: clamp(34px, 5vw, 54px);
+      font-weight: 400;
+      line-height: 1.15;
+    }
+
+    h3 {
+      font-weight: 500;
+    }
+
+    .subtitle {
+      max-width: 640px;
+      margin: 20px auto;
+      font-size: clamp(18px, 3vw, 25px);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    .authors {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #c5e5e8;
+    }
+
+    .links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 30px 0;
+    }
+
+    .links a {
+      padding: 10px 24px;
+      border: 1px solid #b2e6e666;
+      border-radius: 30px;
+      font-size: 13px;
+      text-decoration: none;
+    }
+
+    .links a:hover {
+      background: #b8ffe820;
+      color: white;
+    }
+
+    .scroll {
+      margin-top: 65px;
+      font: 11px monospace;
+      letter-spacing: 0.18em;
+      color: #b9dfe0;
+    }
+
+    .ocean {
+      position: relative;
+      isolation: isolate;
+    }
+
+    .creatures {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .fish {
+      position: absolute;
+      width: 65px;
+      opacity: 0.24;
+      animation: swim 18s ease-in-out infinite alternate;
+    }
+
+    section {
+      position: relative;
+      max-width: 1020px;
+      min-height: 500px;
+      margin: auto;
+      padding: 100px 50px;
+    }
+
+    .sectionhead {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      font: 11px monospace;
+      letter-spacing: 0.16em;
+      color: var(--mint);
+    }
+
+    .sectionhead::after {
+      content: "";
+      width: 65px;
+      height: 1px;
+      background: #7ef3cc55;
+    }
+
+    .prose {
+      max-width: 730px;
+      font-size: 17px;
+      line-height: 1.9;
+      color: #bad1db;
+    }
+
+    .frame {
+      display: grid;
+      place-items: center;
+      min-height: 230px;
+      padding: 30px;
+      border: 1px solid #9dd5dd30;
+      border-radius: 4px;
+      background: #c8f4ff05;
       text-align: center;
-      font-size: 29px;
-      margin-bottom: 20px;
+      font: 12px monospace;
+      letter-spacing: 0.08em;
+      color: #8eabbc;
     }
 
     .grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
     }
 
-    figure { margin: 0; }
-
-    figcaption {
-      text-align: center;
-      margin-top: 10px;
+    .caption {
+      margin-top: 14px;
+      font: 11px monospace;
+      letter-spacing: 0.1em;
+      color: #9bbac8;
     }
 
-    .placeholder {
-      display: grid;
-      place-items: center;
-      min-height: 240px;
-      padding: 20px;
-      border: 2px dashed #ccc;
-      border-radius: 10px;
-      background: #f5f5f5;
-      color: #777;
-      text-align: center;
-    }
-
-    img, video {
-      display: block;
-      width: 100%;
-      border-radius: 8px;
+    .tag {
+      color: var(--mint);
     }
 
     pre {
-      padding: 20px;
-      overflow-x: auto;
-      border-radius: 8px;
-      background: #f3f3f3;
-      line-height: 1.5;
+      padding: 24px;
+      border: 1px solid #ffffff15;
+      background: #ffffff06;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 12px;
+      line-height: 1.7;
+      color: #a8c6d0;
     }
 
-    footer {
+    .floor {
+      position: relative;
+      height: 370px;
+      overflow: hidden;
+    }
+
+    .floor svg {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 300px;
+    }
+
+    .footer {
+      position: absolute;
+      bottom: 25px;
+      width: 100%;
       text-align: center;
-      color: #777;
-      font-size: 14px;
+      font: 11px monospace;
+      letter-spacing: 0.1em;
+      color: #294542;
+    }
+
+    .depth {
+      position: fixed;
+      right: 20px;
+      bottom: 25px;
+      z-index: 8;
+      padding-left: 12px;
+      border-left: 1px solid #81e8d866;
+      font: 11px monospace;
+      color: #b1eddf;
+      pointer-events: none;
+    }
+
+    .rays {
+      position: absolute;
+      inset: 260px 0 0;
+      z-index: -1;
+      pointer-events: none;
+      background: linear-gradient(
+        110deg,
+        transparent 30%,
+        #c8ffff09 31%,
+        transparent 38%,
+        transparent 60%,
+        #c8ffff06 61%,
+        transparent 67%
+      );
+    }
+
+    @keyframes ping {
+      0% {
+        transform: translateY(-180px) scaleX(0.05);
+        opacity: 0;
+      }
+
+      5% {
+        opacity: 0.6;
+      }
+
+      90% {
+        opacity: 0.45;
+      }
+
+      100% {
+        transform: translateY(var(--sonar-travel, 4000px)) scaleX(1);
+        opacity: 0;
+      }
+    }
+
+    @keyframes swim {
+      to {
+        translate: 100px 20px;
+      }
     }
 
     @media (max-width: 650px) {
-      .grid { grid-template-columns: 1fr; }
-      .subtitle { font-size: 21px; }
+      section {
+        padding: 75px 25px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: 910px;
+        padding-top: 430px;
+      }
+
+      nav a {
+        margin-left: 10px;
+        font-size: 10px;
+      }
+
+      .depth {
+        right: 8px;
+        font-size: 9px;
+      }
+
+      .ship {
+        width: 240px;
+        top: 151px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+      }
+
+      .sonar i {
+        display: none;
+      }
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <h1>PROJECT NAME</h1>
-    <p class="subtitle">
-      Your Research Paper Title Goes Here
+  <div class="sonar" aria-hidden="true">
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+    <i></i>
+  </div>
+
+  <nav>
+    <strong>CAPE</strong>
+    <div>
+      <a href="#overview">Overview</a>
+      <a href="#method">Method</a>
+      <a href="#results">Results</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="sky"></div>
+    <div class="horizon"></div>
+    <div class="rays"></div>
+
+    <!-- Research ship -->
+    <svg
+      class="ship"
+      viewBox="0 0 320 160"
+      aria-label="Research ship at the ocean surface"
+      role="img"
+    >
+      <path d="M22 112H300L267 145H67Z" fill="#163e4c"/>
+      <path d="M35 114H291" stroke="#edb16d" stroke-width="6"/>
+      <path d="M94 70H230V111H94Z" fill="#f4eee0"/>
+      <path d="M133 40H206V72H133Z" fill="#f4eee0"/>
+
+      <path
+        d="M146 47H162V62H146ZM173 47H192V62H173Z"
+        fill="#386579"
+      />
+
+      <path
+        d="M106 82H125V96H106ZM139 82H158V96H139ZM172 82H191V96H172Z"
+        fill="#386579"
+      />
+
+      <path d="M211 79H224V111H211Z" fill="#c7814f"/>
+      <path
+        d="M177 40V13M158 25H197"
+        stroke="#234d59"
+        stroke-width="3"
+      />
+      <path d="M179 14L208 20L179 28" fill="#d4855b"/>
+      <path
+        d="M63 110V87M63 88H85"
+        stroke="#234d59"
+        stroke-width="3"
+      />
+      <circle cx="250" cy="124" r="5" fill="#c5e9e1"/>
+    </svg>
+
+    <p class="eyebrow">
+      Texas A&amp;M University · Research project
     </p>
 
-    <p class="authors">Author One · Author Two · Author Three</p>
-    <p>Texas A&amp;M University</p>
+    <h1>CAPE</h1>
 
-    <!-- Replace these URLs when your resources are ready. -->
-    <nav class="buttons" aria-label="Project resources">
-      <a class="button" href="paper.pdf">Paper</a>
-      <a class="button" href="https://github.com/YOUR-USERNAME/YOUR-REPO">
-        Code
-      </a>
-      <a class="button" href="#dataset">Dataset</a>
-      <a class="button" href="#citation">Citation</a>
-    </nav>
+    <p class="subtitle">
+      Your full research project title goes here.
+    </p>
+
+    <p class="authors">
+      Author One &nbsp;·&nbsp; Author Two &nbsp;·&nbsp; Author Three
+    </p>
+
+    <div class="links">
+      <a href="#overview">Explore the research ↘</a>
+      <a href="#resources">Project resources</a>
+    </div>
+
+    <p class="scroll">
+      SCROLL TO DIVE
+      <br><br>
+      ↓
+    </p>
   </header>
 
-  <main>
-    <section>
-      <h2>Qualitative Comparison</h2>
-      <p>
-        Briefly explain what the comparison demonstrates.
+  <main class="ocean">
+    <div class="creatures" id="creatures" aria-hidden="true"></div>
+
+    <section id="overview">
+      <div class="sectionhead">01 / THE OPEN WATER</div>
+      <h2>Beneath the surface.</h2>
+
+      <p class="prose">
+        Add your abstract here. Introduce the problem your research
+        addresses, explain your approach, and summarize the main findings.
+        This is placeholder content for your CAPE project website.
+      </p>
+
+      <p class="prose">
+        Replace the author names, project title, and section text with
+        your paper’s final content.
+      </p>
+    </section>
+
+    <section id="method">
+      <div class="sectionhead">02 / A DEEPER LOOK</div>
+      <h2>The method.</h2>
+
+      <p class="prose">
+        Describe the architecture or workflow behind your research.
+      </p>
+
+      <div class="frame">
+        METHOD DIAGRAM
+        <br><br>
+        Replace this panel with your architecture figure.
+      </div>
+
+      <p class="caption">FIG. 01 — METHOD OVERVIEW</p>
+    </section>
+
+    <section id="results">
+      <div class="sectionhead">03 / INTO THE BLUE</div>
+      <h2>See the difference.</h2>
+
+      <p class="prose">
+        Add qualitative comparisons and explain what the results demonstrate.
       </p>
 
       <div class="grid">
-        <figure>
-          <div class="placeholder">Baseline image or video</div>
-          <figcaption>Baseline</figcaption>
-        </figure>
+        <div>
+          <div class="frame">BASELINE IMAGE</div>
+          <p class="caption">BASELINE</p>
+        </div>
 
-        <figure>
-          <div class="placeholder">Your method image or video</div>
-          <figcaption>Our Method</figcaption>
-        </figure>
+        <div>
+          <div class="frame">CAPE RESULT IMAGE</div>
+          <p class="caption tag">OUR METHOD</p>
+        </div>
       </div>
     </section>
 
-    <section>
-      <h2>Abstract</h2>
-      <p>
-        Describe the problem, your approach, and your main findings.
+    <section id="benchmarks">
+      <div class="sectionhead">04 / THE DEEP OCEAN</div>
+      <h2>Measured in detail.</h2>
+
+      <p class="prose">
+        Add your datasets, evaluation setup, and quantitative results here.
       </p>
+
+      <div class="frame">RESULTS TABLE OR DATASET FIGURE</div>
     </section>
 
-    <section>
-      <h2>Method</h2>
-      <div class="placeholder">Method / architecture diagram</div>
-      <p>
-        Explain the main components of your approach.
+    <section id="resources">
+      <div class="sectionhead">05 / AT THE SEABED</div>
+      <h2>Keep exploring.</h2>
+
+      <p class="prose">
+        Paper, code, and dataset links can be added here when available.
       </p>
-    </section>
 
-    <section>
-      <h2>Results</h2>
-      <div class="placeholder">Results table or figure</div>
-    </section>
+      <h3>Citation</h3>
 
-    <section id="dataset">
-      <h2>Dataset</h2>
-      <p>Describe your dataset or evaluation benchmarks.</p>
+      <pre>@article{your_citation_key,
+  title  = {Your Full Paper Title},
+  author = {Your Authors},
+  year   = {2026}
+}</pre>
 
-      <div class="grid">
-        <div class="placeholder">Dataset example 1</div>
-        <div class="placeholder">Dataset example 2</div>
-      </div>
-    </section>
+      <p class="caption">ACKNOWLEDGMENTS</p>
 
-    <section id="citation">
-      <h2>Citation</h2>
-      <pre><code>@article{yourproject2026,
-  title   = {Your Paper Title},
-  author  = {Author One and Author Two},
-  journal = {Publication},
-  year    = {2026}
-}</code></pre>
-    </section>
-
-    <section>
-      <h2>Acknowledgments</h2>
-      <p>Add collaborators, funding, and computing resources here.</p>
+      <p class="prose">
+        Add funding, collaborators, and computing acknowledgments.
+      </p>
     </section>
   </main>
 
-  <footer>Your Project · Texas A&amp;M University</footer>
+  <!-- Ocean floor -->
+  <div class="floor" aria-hidden="true">
+    <svg
+      viewBox="0 0 1440 300"
+      preserveAspectRatio="xMidYMax slice"
+    >
+      <defs>
+        <pattern
+          id="sand"
+          width="32"
+          height="25"
+          patternUnits="userSpaceOnUse"
+        >
+          <circle cx="5" cy="8" r="1" fill="#486365"/>
+          <circle cx="22" cy="18" r="1.5" fill="#a6b293"/>
+        </pattern>
+
+        <g id="plant" fill="none" stroke-linecap="round">
+          <path
+            d="M0 0Q-25-45 0-85T-5-150M6 0Q40-45 15-100M-7 0Q-42-35-25-95"
+            stroke="#386c66"
+            stroke-width="10"
+          />
+          <path
+            d="M2 0Q-5-50 15-70"
+            stroke="#69917b"
+            stroke-width="7"
+          />
+        </g>
+
+        <g
+          id="crab"
+          stroke="#c27b58"
+          stroke-width="5"
+          fill="none"
+          stroke-linecap="round"
+        >
+          <path
+            d="M-20 0L-35-12L-44-5M-20 7L-38 4L-44 14M20 0L35-12L44-5M20 7L38 4L44 14M-15-10L-29-27M15-10L29-27"
+          />
+          <ellipse cy="-2" rx="23" ry="15" fill="#c27b58"/>
+          <path d="M-10-15V-23M10-15V-23"/>
+          <circle
+            cx="-10"
+            cy="-24"
+            r="2"
+            fill="#102f36"
+            stroke="none"
+          />
+          <circle
+            cx="10"
+            cy="-24"
+            r="2"
+            fill="#102f36"
+            stroke="none"
+          />
+          <path
+            d="M-29-27L-39-39M-29-27L-24-40M29-27L39-39M29-27L24-40"
+          />
+        </g>
+      </defs>
+
+      <path
+        d="M0 172Q230 130 420 182T850 166T1440 164V300H0Z"
+        fill="#879b89"
+      />
+
+      <path
+        d="M0 172Q230 130 420 182T850 166T1440 164V300H0Z"
+        fill="url(#sand)"
+      />
+
+      <use href="#plant" x="140" y="178"/>
+      <use href="#plant" x="1220" y="165"/>
+
+      <use
+        href="#plant"
+        x="1280"
+        y="170"
+        transform="translate(380 50) scale(.7)"
+      />
+
+      <path
+        d="M190 185Q197 130 250 139Q278 150 285 190Z"
+        fill="#38555c"
+      />
+
+      <path
+        d="M1100 181Q1102 112 1160 126L1202 179Z"
+        fill="#456369"
+      />
+
+      <path
+        d="M1030 189Q1040 156 1070 160L1108 190Z"
+        fill="#304b55"
+      />
+
+      <use href="#crab" x="390" y="208"/>
+      <use href="#crab" x="910" y="197"/>
+
+      <path
+        d="M650 213Q665 186 680 213Z"
+        fill="#bfad87"
+        stroke="#7e8370"
+        stroke-width="2"
+      />
+    </svg>
+
+    <div class="footer">
+      CAPE · TEXAS A&amp;M UNIVERSITY
+    </div>
+  </div>
+
+  <div class="depth" aria-hidden="true">
+    DEPTH <span id="depth">0000</span> m
+  </div>
+
+  <script>
+    // Adjust sonar travel to match the full page height.
+    const sonar = document.querySelector(".sonar");
+
+    function sizeSonar() {
+      const travel = Math.max(0, sonar.clientHeight - 180);
+      sonar.style.setProperty("--sonar-travel", `${travel}px`);
+    }
+
+    new ResizeObserver(sizeSonar).observe(document.body);
+    addEventListener("load", sizeSonar);
+    sizeSonar();
+
+    // Generate decorative background fish.
+    const field = document.getElementById("creatures");
+
+    for (let n = 0; n < 18; n++) {
+      const fish = document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg"
+      );
+
+      fish.setAttribute("viewBox", "0 0 100 45");
+      fish.setAttribute("class", "fish");
+
+      fish.style.cssText = `
+        top: ${4 + n * 5}%;
+        left: ${n % 2 ? 72 : 5 + (n % 4) * 6}%;
+        width: ${35 + (n % 4) * 18}px;
+        animation-delay: -${n * 1.7}s;
+      `;
+
+      fish.innerHTML = `
+        <path
+          d="M10 22L0 5V40L10 22Q45-10 80 22Q45 54 10 22Z"
+          fill="#8ac6cc"
+        />
+        <circle cx="65" cy="19" r="2" fill="#082c49"/>
+      `;
+
+      field.appendChild(fish);
+    }
+
+    // Update the depth indicator as the visitor scrolls.
+    let queued = false;
+
+    function updateDepth() {
+      const maxScroll =
+        document.documentElement.scrollHeight - innerHeight;
+
+      const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
+
+      document.getElementById("depth").textContent =
+        String(Math.round(progress * 4000)).padStart(4, "0");
+
+      queued = false;
+    }
+
+    addEventListener(
+      "scroll",
+      () => {
+        if (!queued) {
+          queued = true;
+          requestAnimationFrame(updateDepth);
+        }
+      },
+      { passive: true }
+    );
+
+    updateDepth();
+  </script>
 </body>
 </html>
