@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Research Project</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: #303030;
+      background: white;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+    }
+
+    header, main, footer {
+      max-width: 1000px;
+      margin: auto;
+      padding: 30px 24px;
+    }
+
+    header {
+      text-align: center;
+      padding-top: 65px;
+      padding-bottom: 50px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(32px, 6vw, 48px);
+      line-height: 1.2;
+    }
+
+    .subtitle {
+      margin: 16px auto;
+      max-width: 850px;
+      font-size: 25px;
+      line-height: 1.4;
+    }
+
+    .authors { color: #1673b8; }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    .button {
+      padding: 8px 22px;
+      border-radius: 24px;
+      background: #333;
+      color: white;
+      text-decoration: none;
+    }
+
+    .button:hover { background: #1673b8; }
+
+    section { margin-bottom: 60px; }
+
+    h2 {
+      text-align: center;
+      font-size: 29px;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    figure { margin: 0; }
+
+    figcaption {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .placeholder {
+      display: grid;
+      place-items: center;
+      min-height: 240px;
+      padding: 20px;
+      border: 2px dashed #ccc;
+      border-radius: 10px;
+      background: #f5f5f5;
+      color: #777;
+      text-align: center;
+    }
+
+    img, video {
+      display: block;
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    pre {
+      padding: 20px;
+      overflow-x: auto;
+      border-radius: 8px;
+      background: #f3f3f3;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      color: #777;
+      font-size: 14px;
+    }
+
+    @media (max-width: 650px) {
+      .grid { grid-template-columns: 1fr; }
+      .subtitle { font-size: 21px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>PROJECT NAME</h1>
+    <p class="subtitle">
+      Your Research Paper Title Goes Here
+    </p>
+
+    <p class="authors">Author One · Author Two · Author Three</p>
+    <p>Texas A&amp;M University</p>
+
+    <!-- Replace these URLs when your resources are ready. -->
+    <nav class="buttons" aria-label="Project resources">
+      <a class="button" href="paper.pdf">Paper</a>
+      <a class="button" href="https://github.com/YOUR-USERNAME/YOUR-REPO">
+        Code
+      </a>
+      <a class="button" href="#dataset">Dataset</a>
+      <a class="button" href="#citation">Citation</a>
+    </nav>
+  </header>
+
+  <main>
+    <section>
+      <h2>Qualitative Comparison</h2>
+      <p>
+        Briefly explain what the comparison demonstrates.
+      </p>
+
+      <div class="grid">
+        <figure>
+          <div class="placeholder">Baseline image or video</div>
+          <figcaption>Baseline</figcaption>
+        </figure>
+
+        <figure>
+          <div class="placeholder">Your method image or video</div>
+          <figcaption>Our Method</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Abstract</h2>
+      <p>
+        Describe the problem, your approach, and your main findings.
+      </p>
+    </section>
+
+    <section>
+      <h2>Method</h2>
+      <div class="placeholder">Method / architecture diagram</div>
+      <p>
+        Explain the main components of your approach.
+      </p>
+    </section>
+
+    <section>
+      <h2>Results</h2>
+      <div class="placeholder">Results table or figure</div>
+    </section>
+
+    <section id="dataset">
+      <h2>Dataset</h2>
+      <p>Describe your dataset or evaluation benchmarks.</p>
+
+      <div class="grid">
+        <div class="placeholder">Dataset example 1</div>
+        <div class="placeholder">Dataset example 2</div>
+      </div>
+    </section>
+
+    <section id="citation">
+      <h2>Citation</h2>
+      <pre><code>@article{yourproject2026,
+  title   = {Your Paper Title},
+  author  = {Author One and Author Two},
+  journal = {Publication},
+  year    = {2026}
+}</code></pre>
+    </section>
+
+    <section>
+      <h2>Acknowledgments</h2>
+      <p>Add collaborators, funding, and computing resources here.</p>
+    </section>
+  </main>
+
+  <footer>Your Project · Texas A&amp;M University</footer>
+</body>
+</html>
