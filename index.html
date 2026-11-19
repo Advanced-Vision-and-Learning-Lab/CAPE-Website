@@ -544,10 +544,16 @@
       <div class="sectionhead">01 / THE OPEN WATER</div>
       <h2>Beneath the surface.</h2>
 
-      <p class="prose">
-       Synthetic aperture radar (SAR) and synthetic aperture sonar (SAS) are important sensing modalities for a variety of domains including maritime applications. Despite similarities, these two modalities are generally investigated separately. SAR has benefited from extensive research, open-source datasets, and pretrained foundation models, whereas SAS resources remain comparatively limited. Computer vision foundation models offer a practical means to improve SAS downstream-task performance despite limited SAS-specific data. We introduce Coherent APerture Evaluation (CAPE), a modular test-and-evaluation harness for investigating the adaptation of vision foundation models for downstream SAR and SAS tasks, including classification, segmentation, and object detection. CAPE leverages parameter-efficient fine-tuning (PEFT) and few-shot learning to enable effective model adaptation under limited labeled-data and computational-resource constraints. Its modular design facilitates the integration and comparison of datasets, models, and training strategies, while its task-vector methods support cross-modality analysis of SAR-to-SAS transfer.
-      </p>
-
+     <p class="prose">
+  Coherent APerture Evaluation (CAPE) is a modular framework for adapting
+  and evaluating vision foundation models on synthetic aperture radar
+  (SAR) and synthetic aperture sonar (SAS) tasks, including classification,
+  segmentation, and object detection. CAPE combines parameter-efficient
+  fine-tuning and few-shot learning to address limited labeled data and
+  computing resources, particularly for SAS. Its flexible design enables
+  comparisons across datasets, models, and training strategies, while
+  task-vector methods support analysis of SAR-to-SAS transfer.
+</p>
     <section id="method">
       <div class="sectionhead">02 / A DEEPER LOOK</div>
       <h2>The method.</h2>
